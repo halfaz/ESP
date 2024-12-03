@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Settings</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">The control center and configuration file for the ESP system. Contains all major settings and configurations.</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+on load:
+
+
+
+# _____   ____    ____  
+#| ____| / ___|  |  _  \ 
+#|  _|   \___ \  | |_) |
+#| |___   ___) | |  __/ 
+#|_____| |____/  |_|    
+#
+#
+#Welcome To The Easy Skript Panel
+#We do have some easy built in settings but when adding new ESP Skripts
+#You will need to add some Global Variubles
+#
+#
+
+# Colors
+#   %{server::e1}%
+    #Text Color 1
+    set {ESP::t1} to "&7"
+    #Highlight 1
+    set {ESP::h1} to "&7"
+    #Highlight 2
+    set {ESP::h2} to "&7"
+    #Text Color 2
+    set {ESP::t2} to "&7"
+    #Error Color 1
+    set {ESP::e1} to "&7"
+
+
+    #Servername
+    set {ESP::name} to "§7[Servername]"
+
+    #Events
+    set {ESP::enable_event} to "false"
+
+    #Discord
+    set {ESP::discord} to "Your Discord Invite"
+    set {ESP::discordline1} to "&7Join our Discord for Events Sneekpeeks!"
+    set {ESP::discordline2} to "Thanks have fun playing"
+    
+    #Console Chat User Name
+    set {ESP::ConsoleChatUserName} to "HalfTheDev"
+
+
+    #Playtime reward
+    set {ESP::playtimerewardtimer} to "30 minutes"
+    set {ESP::playtimereward} to "30 diamond"
+
+    #Symbols
+    #These may be used by ESP Skripts
+    #You can modify these
+    set {symbols::defense} to "&e❈"
+    set {symbols::health} to "&c❤"
+    set {symbols::strength} to "&6❁"
+    set {symbols::rank} to "&e★"
+    set {symbols::miningspeed} to "&7⛏"
+    set {symbols::star} to "&6✪"
+    set {symbols::unbreaking} to "&a❂"
+    set {symbols::mending} to "&b✧"
+
+
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

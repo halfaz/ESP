@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Spawn</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Spawn</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Manages spawn locations and spawn-related functionality.</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+on skript load:
+    set {_filename} to "ESP-Spawn.sk"
+    if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+        add {_filename} to {ESP::loaded_scripts::*}
+
+
+
+command /setspawn:
+    permission: ESP.setspawn
+    trigger:
+        set {spawn} to player's location
+        set {spawn.yaw} to player's yaw
+        set {spawn.pitch} to player's pitch
+
+        send "%{ESP::name}% %{ESP::h1}%Spawn %{ESP::t1}%location has been set to %{ESP::h2}%%{spawn}%"
+        send "%{ESP::name}% %{ESP::h1}%Direction: %{ESP::h1}%Yaw: %{ESP::h2}%%{spawn.yaw}%, %{ESP::h1}%Pitch: %{ESP::h2}%%{spawn.pitch}%"
+        
+        play sound "block.note_block.pling" with volume 1 to player
+
+
+command /spawn:
+    permission: ESP.spawn
+    trigger:
+        if {temp::player::%player%::teleport} is set:
+            message "%{ESP::name}% %{ESP::t1}%You are already teleporting to spawn"
+            stop
+        message "%{ESP::name}% %{ESP::t1}%you're teleporting to spawn, don't move!"
+        set {temp::player::%player%::teleport} to now
+        set {_location} to player's location
+        while difference between {temp::player::%player%::teleport} and now is less than 5 seconds:
+            wait a tick
+            distance between {_location} and player's location is greater than 0
+            delete {temp::player::%player%::teleport}
+            message "%{ESP::name}% %{ESP::e1}%Cancelled teleportation"
+            stop
+        {temp::player::%player%::teleport} is set
+        delete {temp::player::%player%::teleport}
+        
+        # Teleport with direction
+        teleport player to {spawn}
+        set player's yaw to {spawn.yaw}
+        set player's pitch to {spawn.pitch}
+        
+        message "%{ESP::name}% %{ESP::t1}%Teleported to spawn"
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

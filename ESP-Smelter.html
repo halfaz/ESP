@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Settings</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Autosmelts items...</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+                on skript load:
+set {_filename} to "ESP-Smelter.sk"
+    if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+        add {_filename} to {ESP::loaded_scripts::*}
+
+command /toggleautosmelt:
+    aliases: /tas
+    permission: ESP.autosmelt
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    trigger:
+        if {auto_smelt::%player%} is not set:
+            set {auto_smelt::%player%} to true
+            send "%{ESP::name}% %{ESP::t1}%Auto-smelt has been %{ESP::h1}%ENABLED"
+            play sound "block.note_block.pling" with volume 1 to player
+        else:
+            delete {auto_smelt::%player%}
+            send "%{ESP::name}% %{ESP::t1}%Auto-smelt has been %{ESP::h1}%DISABLED"
+            play sound "block.note_block.bass" with volume 1 to player
+
+every 1 seconds:
+    loop all players:
+        if {auto_smelt::%loop-player%} is set:
+            autoSmelt(loop-player)
+
+function autoSmelt(p: player):
+    set {_smelted} to false
+    loop all items in {_p}'s inventory:
+        if loop-value is raw iron or raw gold or raw copper or ancient debris:
+            set {_amount} to item amount of loop-value
+            if loop-value is raw iron:
+                remove loop-value from {_p}'s inventory
+                give {_amount} of iron ingot to {_p}
+                set {_smelted} to true
+            else if loop-value is raw gold:
+                remove loop-value from {_p}'s inventory
+                give {_amount} of gold ingot to {_p}
+                set {_smelted} to true
+            else if loop-value is raw copper:
+                remove loop-value from {_p}'s inventory
+                give {_amount} of copper ingot to {_p}
+                set {_smelted} to true
+            else if loop-value is ancient debris:
+                remove loop-value from {_p}'s inventory
+                give {_amount} of netherite scrap to {_p}
+                set {_smelted} to true
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Settings</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Become a telepath and autopick up blocks [!!!support for all blocks havent been added please contact halfthedev if it doesnt work!!!]</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+on skript load:
+    set {_filename} to "ESP-Telepathy.sk"
+    if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+        add {_filename} to {ESP::loaded_scripts::*}
+on break:
+    if gamemode of player is survival:
+        cancel drops
+        give drops of event-block using player's tool to player
+        set {_loc} to location of event-block
+        if event-block is spawner:
+            add 1 to player's level
+            spawn 5 experience orb at {_loc}
+        else if event-block is coal ore or iron ore or gold ore or diamond ore or emerald ore or redstone ore or lapis ore or copper ore or nether gold ore or nether quartz ore or deepslate coal ore or deepslate iron ore or deepslate gold ore or deepslate diamond ore or deepslate emerald ore or deepslate redstone ore or deepslate lapis ore or deepslate copper ore:
+            spawn 1 experience orb at {_loc}
+        set event-block to air
+    else:
+        cancel drops
+        set event-block to air
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

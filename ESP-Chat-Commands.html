@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Settings</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Adds Extra Chat Commands</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+            on skript load:
+                set {_filename} to "ESP-Chat-Commands.sk"
+                if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+                    add {_filename} to {ESP::loaded_scripts::*}
+            
+            command /clearchat [<text>]:
+                aliases: /cc
+                permission: chat.clear
+                permission message: %{ESP::name}% %{ESP::e1}%You don't have permission to clear chat!
+                trigger:
+                    delete {chat::*}
+                    loop 100 times:
+                        broadcast " "
+                    broadcast "%{ESP::name}% %{ESP::t1}%Chat has been cleared by %{ESP::h1}%%player%"
+            
+            command /online:
+                aliases: /who
+                trigger:
+                    set {_count} to 0
+                    send "%{ESP::name}%"
+                    send "&8&l&m--------------------------------"
+                    send "%{ESP::h1}%Online Players:"
+                    loop all players:
+                        add 1 to {_count}
+                        send "%{ESP::t1}%- %{ESP::h1}%%loop-player%"
+                    send "%{ESP::t1}%Total online: %{ESP::h1}%%{_count}%"
+                    send "&8&l&m--------------------------------"
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

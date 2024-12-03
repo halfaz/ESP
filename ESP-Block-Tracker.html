@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Settings</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Tracks blocks broken for each player</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+                
+on skript load:
+    set {_filename} to "ESP-Block-Tracker.sk"
+    if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+        add {_filename} to {ESP::loaded_scripts::*}
+
+
+command /resetblocks []:
+    permission: ESP.blocks.admin
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    trigger:
+        if arg-1 is set:
+            set {blocks::%arg-1's uuid%::blocks} to 0
+            send "%{ESP::name}% %{ESP::t1}%Reset blocks for %{ESP::h1}%%arg-1%"
+        else:
+            set {blocks::%player's uuid%::blocks} to 0
+            send "%{ESP::name}% %{ESP::t1}%Reset your blocks!"
+
+command /setblocks  :
+    permission: ESP.blocks.admin
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    trigger:
+        if arg-1 is set:
+            if arg-2 is set:
+                set {blocks::%arg-1's uuid%::blocks} to arg-2
+                send "%{ESP::name}% %{ESP::t1}%Set %{ESP::h1}%%arg-1%%{ESP::t1}%'s blocks to %{ESP::h1}%%arg-2%"
+                send "%{ESP::name}% %{ESP::t1}%Your blocks have been set to %{ESP::h1}%%arg-2%" to arg-1
+            else:
+                send "%{ESP::name}% %{ESP::e1}%Please specify a number of blocks!"
+        else:
+            send "%{ESP::name}% %{ESP::e1}%Please specify a player and number of blocks!"
+
+command /addblocks  :
+    permission: ESP.blocks.admin
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    trigger:
+        if arg-1 is set:
+            if arg-2 is set:
+                add arg-2 to {blocks::%arg-1's uuid%::blocks}
+                send "%{ESP::name}% %{ESP::t1}%Added %{ESP::h1}%%arg-2% %{ESP::t1}%blocks to %{ESP::h1}%%arg-1%%{ESP::t1}%'s total"
+                send "%{ESP::name}% %{ESP::t1}%You received %{ESP::h1}%%arg-2% %{ESP::t1}%blocks" to arg-1
+            else:
+                send "%{ESP::name}% %{ESP::e1}%Please specify a number of blocks!"
+        else:
+            send "%{ESP::name}% %{ESP::e1}%Please specify a player and number of blocks!"
+
+command /removeblocks  :
+    permission: ESP.blocks.admin
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    trigger:
+        if arg-1 is set:
+            if arg-2 is set:
+                remove arg-2 from {blocks::%arg-1's uuid%::blocks}
+                send "%{ESP::name}% %{ESP::t1}%Removed %{ESP::h1}%%arg-2% %{ESP::t1}%blocks from %{ESP::h1}%%arg-1%%{ESP::t1}%'s total"
+                send "%{ESP::name}% %{ESP::t1}%You lost %{ESP::h1}%%arg-2% %{ESP::t1}%blocks" to arg-1
+            else:
+                send "%{ESP::name}% %{ESP::e1}%Please specify a number of blocks!"
+        else:
+            send "%{ESP::name}% %{ESP::e1}%Please specify a player and number of blocks!"
+                
+            
+                
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

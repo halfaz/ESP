@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Settings</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Settings</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Allows you to chat through console</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+            on skript load:
+                set {_filename} to "ESP-ConsoleChat.sk"
+                if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+                    add {_filename} to {ESP::loaded_scripts::*}
+            
+            command /c [<text>]:
+                aliases: /console
+                permission: ESP.console
+                permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+                trigger:
+                    if argument is set:
+                        loop 10 times:
+                            send "" to console
+                        send "%{ESP::name}%" to console
+                        send "____________________________________________________" to console
+            
+                        loop {chat::*}:
+                            send "%loop-value%" to console
+                        
+                        set {_time} to now
+                        send "%{ESP::h1}%%{ESP::ConsoleChatUserName}%%{ESP::t2}%: %argument%" to console
+                        send "%{ESP::h1}%%{ESP::ConsoleChatUserName}%%{ESP::t2}%: %argument%" to players
+            
+                        add "%{ESP::h1}%%{ESP::ConsoleChatUserName}%%{ESP::t2}%: %argument%" to {chat::*}
+                        
+                        send "____________________________________________________" to console
+                    else:
+                        message "%{ESP::name}% %{ESP::e1}%Usage: /c <message>"
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

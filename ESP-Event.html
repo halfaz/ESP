@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Event</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Event</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Manages server events and custom event handling system.</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+on skript load:
+    set {_filename} to "ESP-Event.sk"
+    if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+        add {_filename} to {ESP::loaded_scripts::*}
+
+command /eventhost:
+    permission: ESP.event.host
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to host events!"
+    trigger:
+        if {event.open} is true:
+            send "%{ESP::name}% %{ESP::e1}%An event is already open!"
+        else:
+            set {event.open} to true
+            broadcast "%{ESP::name}% %{ESP::t1}%An event has been opened! Use %{ESP::h1}%/eventjoin %{ESP::t1}%to join!"
+            set {pvp::pvp} to "false"
+
+command /eventjoin:
+    trigger:
+        if {event.open} is true:
+            if player's world is not "event_pvp":
+                heal player
+                feed player
+                teleport player to spawn of world("event_pvp")
+                clear player's inventory
+                set player's helmet to air
+                set player's chestplate to air
+                set player's leggings to air
+                set player's boots to air
+                send "%{ESP::name}% %{ESP::t1}%You have joined the event!"
+            else:
+                send "%{ESP::name}% %{ESP::e1}%You are already in the event!"
+        else:
+            send "%{ESP::name}% %{ESP::e1}%There is no open event at the moment!"
+
+command /eventstart:
+    permission: ESP.event.start
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    trigger:
+        if {event.open} is true:
+            set {event.open} to false
+            broadcast "%{ESP::name}% %{ESP::t1}%Event joining has been closed!"
+            set {_count} to 0
+            loop all players:
+                if loop-player's world is "event_pvp":
+                    add 1 to {_count}
+                    clear loop-player's inventory
+                    heal player
+                    feed player
+                    
+                    # Armor Setup
+                    set {_helmet} to netherite helmet
+                    enchant {_helmet} with protection 4, unbreaking 3 and mending 1
+                    
+                    set {_chestplate} to netherite chestplate
+                    enchant {_chestplate} with protection 4, unbreaking 3 and mending 1
+                    
+                    set {_leggings} to netherite leggings
+                    enchant {_leggings} with protection 4, unbreaking 3 and mending 1
+                    
+                    set {_boots} to netherite boots
+                    enchant {_boots} with protection 4, unbreaking 3 and mending 1
+                    
+                    # Give Armor
+                    set loop-player's helmet to {_helmet}
+                    set loop-player's chestplate to {_chestplate}
+                    set loop-player's leggings to {_leggings}
+                    set loop-player's boots to {_boots}
+                    
+                    # Weapon Setup
+                    set {_sword} to netherite sword
+                    enchant {_sword} with sharpness 5, unbreaking 3 and mending 1
+                    give {_sword} to loop-player
+                    
+                    # Give Items
+                    give 64 experience bottles to loop-player
+                    give 64 experience bottles to loop-player
+                    give 32 golden apples to loop-player
+                    give 4 splash potion of strong swiftness to loop-player
+                    give 22 splash potion of strong instant health to loop-player
+                    give 4 splash potion of strong strength to loop-player
+                    give 3 totem of undying to loop-player
+                    
+                    send "%{ESP::name}% %{ESP::t1}%You have received your PvP kit!" to loop-player
+                    execute console command "eventcountdown"
+
+            if {_count} is 0:
+                send "%{ESP::name}% %{ESP::e1}%No players were found in the event_pvp world!" to sender
+            else:
+                send "%{ESP::name}% %{ESP::t1}%Gave PvP kits to %{ESP::h1}%%{_count}% %{ESP::t1}%players in event_pvp world!" to sender
+        else:
+            send "%{ESP::name}% %{ESP::e1}%There is no open event to start!" to sender
+
+command /eventcountdown:
+    permission: ESP.event
+    trigger:
+        loop 10 times:
+            set {_time} to 11 - loop-number
+            loop all players:
+                if loop-player's world is "event_pvp":
+                    send "%{ESP::name}% %{ESP::t1}%PvP starts in %{ESP::h1}%%{_time}%" to loop-player
+                    play sound "block.note_block.pling" with volume 1 to loop-player
+            wait 1 second
+        
+        set {pvp::pvp} to "true"
+        loop all players:
+            if loop-player's world is "event_pvp":
+                send "%{ESP::name}% %{ESP::t1}%PvP has been %{ESP::h1}%ENABLED!" to loop-player
+                play sound "entity.ender_dragon.growl" with volume 1 to loop-player
+
+command /eventclose:
+    permission: ESP.event.host
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to close events!"
+    trigger:
+        loop all players:
+            if loop-player's world is "event_pvp":
+                set {event.open} to false
+                teleport loop-player to spawn point of world "world"
+        broadcast "%{ESP::name}% %{ESP::t1}%The event has been forcefully closed!"
+
+command /eventkick [<player>]:
+    permission: ESP.event.host
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to kick players from events!"
+    usage: "%{ESP::name}% %{ESP::e1}%Usage: /eventkick player"
+    trigger:
+        teleport arg-1 to spawn point of world "world"
+        broadcast "%{ESP::name}% %{ESP::t1}%%{ESP::h1}%%arg-1% %{ESP::t1}%has been kicked from event!"
+
+command /eventprize [<player>]:
+    permission: ESP.event.host
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to give players a prize"
+    usage: "%{ESP::name}% %{ESP::e1}%Usage: /eventprize player"
+    trigger:
+        broadcast "%{ESP::name}% %{ESP::t1}%The Event Has Been Won By %{ESP::h1}%%arg-1%!"
+        loop all players:
+            if loop-player's world is "event_pvp":
+                teleport loop-player to spawn point of world "world"
+        chance of 50%:
+            broadcast "%{ESP::name}% %{ESP::t1}%And has won %{ESP::h1}%1 Mythic Crate Key"
+            give 1 of tripwire hook named "%{ESP::h1}%Mythic Crate key" to arg-1
+        else:
+            broadcast "%{ESP::name}% %{ESP::t1}%And has won %{ESP::h1}%10 credits"
+            execute console command "addcredits %arg-1% 10"
+
+on damage:
+    if attacker is a player:
+        if victim is a player:
+            if victim's world is "event_pvp":
+                if {pvp::pvp} is "false":
+                    cancel event
+                    send "%{ESP::name}% %{ESP::e1}%PvP is currently disabled!" to attacker
+                    play sound "entity.villager.no" at volume 1 at attacker
+
+on respawn:
+    if player's world is "event_pvp":
+        play sound "entity.ender_dragon.growl" with volume 1 at player
+        teleport player to spawn point of world "world"
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

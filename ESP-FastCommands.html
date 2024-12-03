@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-FastCommands</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-FastCommands</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Quick access commands and shortcuts for common server operations.</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+on skript load:
+    set {_filename} to "ESP-FastCommands.sk"
+    if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+        add {_filename} to {ESP::loaded_scripts::*}
+
+command /setrank <text> <text>:
+    permission: ESP.setrank
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    usage: "%{ESP::name}% %{ESP::e1}%Usage: /setrank <player> <rank>"
+    trigger:
+        broadcast "%{ESP::name}% %{ESP::h1}%%arg-1% %{ESP::t1}%has received %{ESP::h1}%%arg-2%"
+        make console execute command "lp user %arg-1% parent set %arg-2%"
+
+command /ESPreload: 
+    permission: ESP.reload
+    permission message: "%{ESP::name}% %{ESP::e1}%You don't have permission to use this command!"
+    trigger:
+        message "%{ESP::name}% %{ESP::t1}%Reloading all ESP skripts..."
+
+        execute console command "/sk reload ESP-settings.sk"
+        message "%{ESP::name}% %{ESP::t1}%Reloaded %{ESP::h1}%ESP-settings"
+    
+        # Loop through all stored ESP scripts and reload them
+        loop {ESP::loaded_scripts::*}:
+            execute console command "/sk reload %loop-value%"
+            message "%{ESP::name}% %{ESP::t1}%Reloaded %{ESP::h1}%%loop-value%"
+        
+        message "%{ESP::name}% %{ESP::t1}%Successfully reloaded %{ESP::h1}%%size of {ESP::loaded_scripts::*}% %{ESP::t1}%ESP scripts!"
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

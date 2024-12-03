@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP-Welcome</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="skript.html" class="back-button">← Back to Scripts</a>
+        
+        <div class="header">
+            <h1 id="script-title">ESP-Welcome</h1>
+        </div>
+
+        <div class="description">
+            <h2>About This Skript</h2>
+            <p id="script-description">Handles player welcome messages and join/leave notifications.</p>
+        </div>
+
+        <div class="code-container">
+            <h2>Code Preview</h2>
+            <button class="copy-button" onclick="copyCode()">Copy Code</button>
+            <div class="code-preview" id="code-content">
+on skript load:
+    set {_filename} to "ESP-Welcome.sk"
+    if {ESP::loaded_scripts::*} doesn't contain {_filename}:
+        add {_filename} to {ESP::loaded_scripts::*}
+
+
+on first join:
+    wait 1 second
+    send "____________________________________________________" to player
+    send "%{ESP::t1}%Welcome %{ESP::h1}%%player% %{ESP::t1}%to %{ESP::name}%!" to players
+        
+on join:
+    if player has played before:
+        wait 1 second
+        send "____________________________________________________" to player
+        send "%{ESP::t1}%Welcome %{ESP::h1}%%player% %{ESP::t1}%to %{ESP::name}%!" to players
+        send "%{ESP::h1}%&l%{ESP::w1}%:" to player
+        send "%{ESP::t1}%• %{ESP::w2}%" to player
+        send "%{ESP::t1}%• %{ESP::w3}%" to player
+        send "%{ESP::t1}%• %{ESP::w4}%" to player
+        send "____________________________________________________" to player
+        send "%{ESP::h1}%&lUp and Coming:" to player
+        send "%{ESP::t1}%• %{ESP::w5}%" to player
+        send "%{ESP::t1}%• %{ESP::w6}%" to player
+        send "%{ESP::t1}%• %{ESP::w7}%" to player
+        send "____________________________________________________" to player
+
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
