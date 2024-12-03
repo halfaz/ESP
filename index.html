@@ -3,78 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESP Scripts</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            color: #0099ff;
-            font-size: 2.5em;
-        }
-
-        .script-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .script-button {
-            background-color: #2a2a2a;
-            border: none;
-            border-radius: 10px;
-            padding: 20px;
-            color: #0099ff;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            text-align: left;
-            text-decoration: none;
-            display: block;
-        }
-
-        .script-button:hover {
-            transform: translateX(10px);
-            background-color: #333333;
-        }
-    </style>
+    <title>ESP Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>ESP Scripts Collection</h1>
-            <p>Click on a script to view its details and code</p>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="esp-logo.png" alt="ESP Logo" class="esp-logo">
+                <span class="esp-name">ESP</span>
+            </a>
+            <div class="nav-links">
+                <span class="current-page">Home</span>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="documentation.html">Documentation</a>
+            </div>
+            <div class="account">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            
         </div>
+        
+    </nav>
 
-        <div class="script-list">
-            <a href="ESP-Settings.html" class="script-button">ESP-Settings.sk</a>
-            <a href="ESP-Welcome.html" class="script-button">ESP-Welcome.sk</a>
-            <a href="ESP-Event.html" class="script-button">ESP-Event.sk</a>
-            <a href="ESP-Discord.html" class="script-button">ESP-Discord.sk</a>
-            <a href="ESP-Fastcommands.html" class="script-button">ESP-FastCommands.sk</a>
-            <a href="ESP-Spawn.html" class="script-button">ESP-Spawn.sk</a>
-            <a href="ESP-Telepathy.html" class="script-button">ESP-Telepathy.sk</a>
-            <a href="ESP-Console-Chat.html" class="script-button">ESP-Console-Chat.sk</a>
-            <a href="ESP-smelter.html" class="script-button">ESP-Smelter.sk</a>
-            <a href="ESP-Block-Tracker.html" class="script-button">ESP-Block-Tracker.sk</a>
-            <a href="ESP-Chat-Commands.html" class="script-button">ESP-Chat-Commands.sk</a>
-            <a href="ESP-Playtime-Reward.html" class="script-button">ESP-Playtime-Reward.sk</a>
-
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Welcome to ESP</h1>
+            <p class="tagline">Enhance your Minecraft server with powerful Skript solutions</p>
+            <div class="main-buttons">
+                <a href="script-lists.html" class="main-button">Browse Skripts</a>
+                <a href="documentation.html" class="main-button">Documentation</a>
+                <a href="getting-started.html" class="main-button">Getting Started</a>
+            </div>
         </div>
     </div>
 </body>

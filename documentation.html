@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP - Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="esp-logo.png" alt="ESP Logo" class="esp-logo">
+                <span class="esp-name">ESP</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <span class="current-page">Documentation</span>
+            </div>
+            <div class="account">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content-section">
+            <h1>Documentation</h1>
+            <div class="docs-navigation">
+                <div class="docs-sidebar">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#installation">Installation</a></li>
+                        <li><a href="#configuration">Configuration</a></li>
+                        <li><a href="#commands">Commands</a></li>
+                    </ul>
+                </div>
+                <div class="docs-content">
+                    <section id="getting-started">
+                        <h2>Getting Started</h2>
+                        <div class="docs-content-section">
+                            <h3>Installation Guide</h3>
+                            <ol class="installation-steps">
+                                <li>
+                                    <strong>Install Skript Plugin</strong>
+                                    <p>Navigate to your server's plugin folder and download <a href="https://github.com/SkriptLang/Skript" class="download-link">Skript</a></p>
+                                    <p>Restart your server after installation</p>
+                                </li>
+                                
+                                <li>
+                                    <strong>Install ESP Scripts</strong>
+                                    <ol class="sub-steps">
+                                        <li>Go to the ESP home page and navigate to "Script Lists"</li>
+                                        <li>Choose your desired ESP script</li>
+                                        <li>Create a new file named <code>ESP-[scriptname].sk</code></li>
+                                        <li>Copy the script content into your new file</li>
+                                        <li>Run <code>/sk reload all</code> in your console</li>
+                                    </ol>
+                                </li>
+                    
+                                <li>
+                                    <strong>Install ESP Settings</strong>
+                                    <p>ESP Settings is required for all scripts to function properly:</p>
+                                    <ol class="sub-steps">
+                                        <li>Find ESP-Settings.sk in the script list</li>
+                                        <li>Follow the same installation process as above</li>
+                                        <li>Check script descriptions for required dependencies</li>
+                                        <li>Add any required variables to ESP-Settings.sk</li>
+                                    </ol>
+                                </li>
+                    
+                                <li>
+                                    <strong>Configuration</strong>
+                                    <p>In ESP-Settings.sk, you can configure:</p>
+                                    <ul class="config-list">
+                                        <li>Server name</li>
+                                        <li>Message colors</li>
+                                        <li>Script-specific variables</li>
+                                    </ul>
+                                </li>
+                    
+                                <li>
+                                    <strong>Quick Reload Feature</strong>
+                                    <p>For faster reloading:</p>
+                                    <ol class="sub-steps">
+                                        <li>Install ESP-FastCommands.sk</li>
+                                        <li>Use command <code>ESPreload</code> to quickly reload all active scripts</li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </div>
+                    </section>
+                    <!-- Add more sections as needed -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
